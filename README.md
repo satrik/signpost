@@ -3,7 +3,7 @@
     <br>
     <span style="font-size:1.5rem;font-weight:600;">singpost</span>
     <br>
-    <span>A simple HTML/CSS/JS webpage to keep an overview of everything in the network.</span>
+    <span>A simple, full responsive HTML/CSS/JS webpage to keep an overview of everything in the network.</span>
     <br><br>
     <img src="preview.png"/>
 </p>
@@ -68,6 +68,11 @@ The following configuration corresponds to the example shown above:
     ],
 ...
 ```
+
+Mobile view:
+<p align="center">
+</p>
+
 
 ## Credits
 Background image by [Kaskar5Z7](https://pixabay.com/users/kaskar5z7-22724723/)
