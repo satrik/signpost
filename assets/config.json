@@ -1,0 +1,56 @@
+{
+    "settings": {
+        "title": "signpost",
+        "openLinksInNewTab": true,
+        "hideColHeaders": false,
+        "singleCol": false,
+        "backgroundColor": "#5e3244",
+        "backgroundImage": "assets/bg.png"
+    },
+    "Text Align": [
+        {
+            "name": "Title 1",
+            "icon": "assets/dummy.png",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 2",
+            "text": "center",
+            "icon": "assets/dummy.png",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 3",
+            "text": "right",
+            "icon": "assets/dummy.png",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 4",
+            "icon": "skip",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 5",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 6",
+            "text": "center",
+            "url": "http://192.168.0.123"
+        },
+        {
+            "name": "Title 7",
+            "text": "right",
+            "url": "http://192.168.0.123"
+        }
+    
+    ],
+    "Second Col": [
+        {
+            "name": "Title 8",
+            "icon": "assets/dummy.png",
+            "url": "http://192.168.0.123"
+        }
+    ]
+}

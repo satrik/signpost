@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!-- Author:   satrik                             -->
+<!-- GitHub:   https://github.com/satrik/signpost -->
+<!-- Created:  2026                               -->
+<!-- License:  MIT                                -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover,shrink-to-fit=yes">
+        <link rel="icon" type="image/png" href="assets/icon/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" />
+        <link rel="shortcut icon" href="assets/icon/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="signpost" />
+        <link rel="manifest" href="assets/icon/site.webmanifest" />
+        <title>signpost</title>
+        <style>
+
+            :root {
+                --white: #ffffff;
+                --bg-color: #535353;
+                --bg-image: "";
+                --grid-repeat: 1;
+                --grid-width: 400;
+                --grid-width-max: 400;
+                --hidden-margin: -15px;
+                --hidden-display: block;
+            }
+
+            body {
+                background-color: var(--bg-color);
+                background-image: var(--bg-image);
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                background-position: top center;
+                color: #f0f0f0;
+                font-family: "Helvetica", "Arial", sans-serif;
+                font-size: 30px;
+                font-size: clamp(1.2rem, 5vw, 1.8rem);
+                margin: 0 15px;
+            }
+
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(var(--grid-repeat), 1fr);
+                column-gap: 15px;
+                justify-items: center;
+                max-width: var(--grid-width);
+                margin: 0 auto;
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+                padding-bottom: max(30px, env(safe-area-inset-bottom));
+                padding-top: max(30px, env(safe-area-inset-top));
+            }
+
+            .grid-item {
+                width: 100%;
+                max-width: var(--grid-width-max);
+                margin-bottom: var(--hidden-margin);
+            }
+
+            .item-header {
+                background-color: rgba(255,255,255,0.4);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                color: rgba(0,0,0,0.5);
+                text-shadow: 0 0 3px #1a4a5b;
+                border-radius: 20px;
+                height: 80px;
+                line-height: 80px;
+                font-size: 40px;
+                font-size: clamp(1.4rem, 6vw, 2.2rem);
+                text-align: center;
+                margin: 20px 0;
+                display: var(--hidden-display);
+                cursor: default;
+            }
+
+            .item-link {
+                display: grid;
+                column-gap: 15px;
+                align-items: center;
+                height: 80px;
+                max-width: 100%;
+                padding: 0 15px;
+                background-color: rgba(0,0,0,0.3);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                margin: 20px 0;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            .item-link-icon {
+                max-width: 50px;
+                max-height: 50px;
+                margin: 0 auto;
+            }
+
+            .item-link-text{
+                margin: 22px 0;
+                width: 100%;
+                display: inline-block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .hide {
+                display: none;
+            }
+
+        </style>  
+    </head>
+    <body>
+        <div class="grid-container"></div>
+        <script type="text/javascript">
+            const minmax = (num, min, max) => Math.min(Math.max(num, min), max)
+
+            let configData
+            let settings
+            let sections
+            let colCount
+            let gridWidth = 400
+            let rootCss = document.querySelector(":root").style
+
+            async function loadConfig() {
+                try {
+                    const response = await fetch('assets/config.json')
+                    if (!response.ok) {
+                        throw new Error(`HTTP-Fehler: ${response.status}`)
+                    }
+                    const data = await response.json()
+                    handleData(data)
+                } catch (err) {
+                    console.error('error:', err)
+                }
+            }
+
+            loadConfig()
+
+            function handleData(data) {
+                configData = data
+                settings = configData.settings
+
+                if (settings) {
+                    if (settings.title) {
+                        document.title = settings.title
+                    }
+                }
+
+                sections = Object.keys(configData)
+                let settingsIndex = sections.indexOf("settings")
+
+                if (settingsIndex > -1) {
+                    sections.splice(settingsIndex, 1)
+                }
+
+                colCount = sections.length
+
+                if (sections.length > 0) {
+                    sections.forEach(section => {
+                        let gridItem = document.createElement("div")
+                        gridItem.classList.add("grid-item")
+                        gridItem.id = section
+                        gridItem.innerHTML = "<div class='item-header'>" + section + "</div>"
+                        document.querySelector(".grid-container").appendChild(gridItem)
+                    })
+                }
+
+                Object.entries(configData).forEach(entry => {
+                    if (entry[0] != "settings") {
+                        Object.entries(entry[1]).forEach(value => {
+                            let itemLink = document.createElement("div")
+                            itemLink.classList.add("item-link")
+                            itemLink.setAttribute("data-section", [entry[0]])
+                            itemLink.setAttribute("data-name", [value[1].name])
+
+                            let iconImg = ""
+                            let iconStyle = "auto"
+                            let textStyle = "style='text-align:left;'"
+                            
+                            if (value[1].text) {
+                                textStyle = "style='text-align:" + value[1].text + ";'"
+                            }
+                            
+                            if (value[1].icon) {
+                                iconStyle = "70px auto"
+
+                                if ((value[1].icon != "" || value[1].icon != " ") && value[1].icon != "skip") {
+                                    iconImg = value[1].icon
+                                }
+                            }
+
+                            itemLink.setAttribute("style", "grid-template-columns: " + iconStyle + ";")
+                            itemLink.innerHTML =
+                                "<img src='" + iconImg + "' class='item-link-icon' loading='lazy' /><span class='item-link-text' " +
+                                textStyle + ">" + value[1].name + "</span>"
+                            document.getElementById([entry[0]]).appendChild(itemLink)
+                        })
+                    }
+                })
+
+                if (settings && settings.hideColHeaders) {
+                    rootCss.setProperty("--hidden-margin", "-20px")
+                    rootCss.setProperty("--hidden-display", "none")
+                }
+
+                if (settings && settings.backgroundColor) {
+                    rootCss.setProperty("--bg-color", settings.backgroundColor)
+                }
+
+                if (settings && settings.backgroundImage) {
+                    rootCss.setProperty("--bg-image", "url(" + settings.backgroundImage + ")")
+                }
+
+                rootCss.setProperty("--grid-width-max", gridWidth + "px")
+
+                setListener()
+                setGridRepeat()
+            }
+
+            function setListener() {
+                document.body.addEventListener("click", function (event) {
+                    if (event.target && event.target.className.includes("link")) {
+                        let element = event.target
+
+                        if (element.matches(".item-link-text") || element.matches(".item-link-icon")) {
+                            element = element.parentElement
+                        }
+
+                        configData[element.dataset.section].forEach(entry => {
+                            if (entry.name == element.dataset.name) {
+                                if (configData.settings && configData.settings.openLinksInNewTab) {
+                                    window.open(entry.url, '_blank').focus()
+                                } else {
+                                    window.location.href = entry.url
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+
+            function setGridRepeat() {
+                let cols = minmax(Math.floor(window.innerWidth / ((gridWidth + 15 * colCount) - 15)), 1, colCount)
+
+                if (settings && settings.singleCol) {
+                    cols = 1
+                }
+
+                rootCss.setProperty("--grid-repeat", cols)
+                rootCss.setProperty("--grid-width", (cols * (gridWidth + 15) - 15) + "px")
+            }
+
+            window.addEventListener('resize', function (event) {
+                setGridRepeat()
+            }, true)
+        </script>
+
+    </body>
+</html>
