@@ -15,7 +15,8 @@ Using *localhost* is also possible, but due to CORS restrictions, the page must 
 
 ## Configuration
 Edit the *config.json* file inside the *assets* folder.  
-The keys are self-explanatory, and for reference, all possible values are already included in the *config.json* file.
+The keys are self-explanatory, and for reference, all possible values are already included in the *config.json* file.  
+The *logos* folder contains some of the logos I use in my environment. Just put the logos you need in the *assets* folder and set them as *icon* in the *config.json*.
 
 ## Examples
 There are several options for aligning text on the buttons:
