@@ -1,13 +1,16 @@
 <p align="center">
-    <img src="assets/icon/favicon-96x96.png"/>
-    <br>
-    <span style="font-size:1.5rem;font-weight:600;">singpost</span>
-    <br>
+   <img src="assets/icon/favicon-96x96.png" />
+</p>   
+<h1 align="center">
+   signpost
+</h1>
+<p align="center"> 
     <span>A simple, full responsive HTML/CSS/JS webpage to keep an overview of everything in the network.</span>
     <br><br>
     <img src="preview.png"/>
+    <img src="https://img.shields.io/badge/license-MIT-blue?style=flat" alt="License">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/satrik/signpost?color=red">
 </p>
-
 
 ## Installation
 Clone or download this repository and place the *index.html* file together with the *assets* folder on any running web server.  
