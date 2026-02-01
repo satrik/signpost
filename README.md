@@ -73,10 +73,5 @@ The following configuration corresponds to the example shown above:
 ...
 ```
 
-Mobile view:
-<p align="center">
-</p>
-
-
 ## Credits
 Background image by [Kaskar5Z7](https://pixabay.com/users/kaskar5z7-22724723/)
